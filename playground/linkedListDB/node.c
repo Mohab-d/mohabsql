@@ -2,6 +2,15 @@
 #include <stdlib.h>
 #include "node.h"
 
+/*
+ * TODO:
+ * understand why in the appendNode function we had to use a doubled pointer
+ * Understand what is this: *head = new_node astrisk is doing here
+ * and here struct Node *current = *head;
+ * Understand why we are passing the address of h to the function ($head)
+ * Undrstand why can't we pass a NULL head
+*/
+
 void appendNode(struct Node **head, int data)
 {
   // Allocate memory for new node and initialize it
@@ -29,22 +38,6 @@ void appendNode(struct Node **head, int data)
 
 int main()
 {
-  struct Node *head = (struct Node *)malloc(sizeof(struct Node));
-  head->data = 0;
-  head->next = NULL;
-
-  appendNode(&head, 4);
-  appendNode(&head, 8);
-  appendNode(&head, 9);
-
-  // Print the linked list
-    struct Node* current = head->next;
-    while (current != NULL)
-    {
-        printf("%d ", current->data);
-        current = current->next;
-    }
-    printf("\n");
 
   // every thing was fine (I hope :D).
   return 0;
