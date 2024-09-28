@@ -1,0 +1,1 @@
+void createdb(char* dbname);
