@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "createdb.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string.h>
 
+// Get were to store data
 char* get_storage_path() {
-  // check were should the db store data
   FILE* file = fopen("./storage.txt", "r");
   if(file == NULL) {
     perror("Error reading storage.txt");
@@ -12,31 +16,38 @@ char* get_storage_path() {
 
   char* storage_path = malloc(sizeof(char) * 1024);
 
-  if(fgets(storage_path, sizeof(storage_path), file) != NULL)
-  {
-    printf("%s\n", storage_path);
-    return storage_path;
-  }
+  // reads text until newline is encountered
+  fscanf(file, "%[^\n]", storage_path);
+  printf("Data from the file:\n%s", storage_path);
+  fclose(file);
 
-  perror("Could not read the storage.txt file.");
-  return NULL;
+  return storage_path;
 }
+
 
 void createdb(char* dbname)
 {
+  // Get storage path
   char* storage_path = get_storage_path();
   if(storage_path == NULL) {
     perror("Could not create db");
     return;
   }
 
-  printf("%s\n", storage_path);
-
+  // Begin
   printf("Creating virual db\npeep poop peep pap...\n");
+
+  // Create db directory
+  createDir(storage_path, dbname);
 }
 
-int main()
+// create a dir in path
+void createDir(char* path, char* name)
 {
-  createdb("he");
-  return 1;
+  strcat(path, "/");
+  if(mkdir(strcat(path, name), 0777) != 0) {
+    printf("When executing: mkdir(\"%s\")\n", path);
+    perror("mkdir");
+    exit(1);
+  };
 }
