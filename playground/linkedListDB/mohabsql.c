@@ -1,11 +1,13 @@
 #include "createdb.h"
 #include <stdio.h>
 #include <string.h>
+#include "print_commands.h"
 
 int main()
 {
   // Wilcom the user
   printf("Wilcom in mohabsql.\n");
+  printf("Type 'help' to list available commands\n\n");
 
   // show user options (TODO)
   //...
@@ -23,6 +25,8 @@ int main()
       printf("DB name: ");
       scanf("%s", dbname);
       createdb(dbname);
+    } else if (strcmp(command, "help") == 0) {
+      print_commands();
     }
   }
 

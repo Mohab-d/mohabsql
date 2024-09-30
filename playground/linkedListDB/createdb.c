@@ -39,7 +39,7 @@ void createdb(char* dbname)
   }
 
   // Begin
-  printf("Creating db...\n");
+  printf("Creating db...\n\n");
 
   // Create db directory
   char *dbpath = createDir(storage_path, dbname);
@@ -49,10 +49,10 @@ void createdb(char* dbname)
   double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
   if(dbpath != NULL) {
-    printf("Database created at %s\n", dbpath);
+    printf("Database created at %s\n\n", dbpath);
     printf("Executed in %.3f seconds.\n", elapsed_time);
   } else {
-    perror("createdb");
+    perror("createdb Error");
   }
 }
 
