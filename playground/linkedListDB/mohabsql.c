@@ -7,7 +7,7 @@ int main()
   // Wilcom the user
   printf("Wilcom in mohabsql.\n");
 
-  // show them options (TODO)
+  // show user options (TODO)
   //...
 
   // get user command
@@ -23,7 +23,7 @@ int main()
     createdb(dbname);
   }
 
-  printf("You are wilcom!.\n");
+  printf("Bye.\n");
 
   return 0;
 }

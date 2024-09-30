@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 
 // Get were to store data
 char* get_storage_path() {
@@ -18,7 +19,6 @@ char* get_storage_path() {
 
   // reads text until newline is encountered
   fscanf(file, "%[^\n]", storage_path);
-  printf("Data from the file:\n%s", storage_path);
   fclose(file);
 
   return storage_path;
@@ -27,6 +27,10 @@ char* get_storage_path() {
 
 void createdb(char* dbname)
 {
+  clock_t start_time, end_time;
+
+  start_time = clock();
+
   // Get storage path
   char* storage_path = get_storage_path();
   if(storage_path == NULL) {
@@ -35,19 +39,31 @@ void createdb(char* dbname)
   }
 
   // Begin
-  printf("Creating virual db\npeep poop peep pap...\n");
+  printf("Creating db...\n");
 
   // Create db directory
-  createDir(storage_path, dbname);
+  char *dbpath = createDir(storage_path, dbname);
+
+  end_time = clock();
+
+  double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+
+  if(dbpath != NULL) {
+    printf("Database created at %s\n", dbpath);
+    printf("Executed in %.3f seconds.\n", elapsed_time);
+  } else {
+    perror("createdb");
+  }
 }
 
 // create a dir in path
-void createDir(char* path, char* name)
+char* createDir(char* path, char* name)
 {
   strcat(path, "/");
-  if(mkdir(strcat(path, name), 0777) != 0) {
-    printf("When executing: mkdir(\"%s\")\n", path);
-    perror("mkdir");
-    exit(1);
+  strcat(path, name);
+  if(mkdir(path, 0777) != 0) {
+    return NULL;
   };
+
+  return path;
 }
