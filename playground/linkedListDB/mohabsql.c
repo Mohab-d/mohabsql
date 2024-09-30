@@ -12,15 +12,18 @@ int main()
 
   // get user command
   char command[1024];
-  scanf("%s", command);
 
-  // perform user command
-  if(strcmp(command, "createdb") == 0)
-  {
-    char dbname[1024];
-    printf("DB name: ");
-    scanf("%s", dbname);
-    createdb(dbname);
+  while(strcmp(command, "exit") != 0) {
+    scanf("%s", command);
+
+    // perform user command
+    if(strcmp(command, "createdb") == 0)
+    {
+      char dbname[1024];
+      printf("DB name: ");
+      scanf("%s", dbname);
+      createdb(dbname);
+    }
   }
 
   printf("Bye.\n");
